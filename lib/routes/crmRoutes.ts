@@ -1,6 +1,12 @@
 import {Request, Response} from "express";
+import { ContactController } from "../controllers/crmController";
+
 
 export class Routes {
+
+
+    public contactController: ContactController = new ContactController();
+
     public routes(app): void {
         app.route('/')
         .get((req: Request, res: Response) => {
@@ -10,11 +16,8 @@ export class Routes {
         })
 
         app.route('/contact')
-        .get((req: Request, res: Response) => {
-            res.status(200).send({
-                message: 'GET request ok'
-            })
-        })
+        .get(this.contactController.getContacts)
+        .post(this.contactController.addNewContact)
 
         .post((req: Request, res: Response) => {
             res.status(200).send({
@@ -23,16 +26,9 @@ export class Routes {
         })
 
         app.route('/contacts/:contactId')
-        .get((req: Request, res: Response) => {
-            res.status(200).send({
-                message: 'Get request ok'
-            })
-        })
-        .put((req: Request, res: Response) => {
-            res.status(200).send({
-                message: 'PUT request ok'
-            })
-        })
+        .get(this.contactController.getContactWithID)
+        
+        .put(this.contactController.updateContact)
         .delete((req: Request, res: Response) => {
             res.status(200).send({
                 message: 'DELETE request ok'
