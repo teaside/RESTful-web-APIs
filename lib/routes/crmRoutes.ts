@@ -27,12 +27,7 @@ export class Routes {
 
         app.route('/contacts/:contactId')
         .get(this.contactController.getContactWithID)
-        
         .put(this.contactController.updateContact)
-        .delete((req: Request, res: Response) => {
-            res.status(200).send({
-                message: 'DELETE request ok'
-            })
-        })
+        .delete(this.contactController.deleteContact)
     }
 }
